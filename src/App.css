@@ -1,38 +1,152 @@
-.App {
-  text-align: center;
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background-color: #F5F7FB;
+	padding: 8px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+main {
+	border: 1px solid #4D5B9E;
+	border-radius: 8px;
+	max-width: 550px;
+	min-height: 550px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 40px 12px 25px 12px;
+	background-image: url(./img/bottom-left-shape.svg), url(./img/top-right-shape.svg);
+	background-position: left bottom, right top;
+	background-repeat: no-repeat, no-repeat;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#root {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h1 {
+	font-family: "Karla", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: bold;
+	font-style: normal;
+	color: #293264;
+	margin: 0 0 16px;
 }
 
-.App-link {
-  color: #61dafb;
+h2 {
+	font-family: "Inter", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	color: #293264;
+	text-align: center;
+	margin-bottom: 24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h3 {
+	font-family: "Karla", sans-serif;
+	font-size: 16px;
+	font-optical-sizing: auto;
+	font-weight: bold;
+	font-style: normal;
+	color: #293264;
+	margin: 0;
 }
+
+button {
+	border: none;
+	cursor: pointer;
+
+}
+
+button.default {
+	background-color: #4D5B9E;
+	color: #fff;
+	font-family: "Inter", sans-serif;
+}
+
+button.default.xl {
+	padding: 16px 28px;
+	max-width: 194px;
+	width: 100%;
+	font-size: 16px;
+	border-radius: 15px;
+}
+
+button.default.lg {
+	padding: 11px 21px;
+	max-width: 120px;
+	width: 100%;
+	font-size: 12px;
+	border-radius: 10px;
+}
+
+.questions-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 24px;
+}
+
+.questions {
+	max-width: 400px;
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.question {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+hr {
+	height: 1px;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background-color: #DBDEF0;
+	color: #DBDEF0;
+	border: none;
+}
+
+.answers {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.answers label {
+	font-family: "Inter", sans-serif;
+	font-size: 12px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.15s ease-in;
+}
+
+.answers label input {
+	display: none;
+}
+
+.answers label.default {
+	background-color: #fff;
+	padding: 4px 18px;
+	border: 1px solid #4D5B9E;
+}
+
+.answers label.default:hover {
+	background-color: #D6DBF5;
+	border: 1px solid transparent;
+}
+
+.answers label:has(input:checked) {
+	background-color: #D6DBF5;
+	border: 1px solid transparent;
+}
+
