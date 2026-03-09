@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from './buttons/Button'
 import { questionsData } from '../data/questions'
-import he from 'he';
+import he from 'he'
 
 export default function Questions(props) {
     const [questions, setQuestions] = React.useState(() =>
@@ -40,37 +40,35 @@ export default function Questions(props) {
     const generateQuestions = questions.map((question, qIndex) => (
         <div className='question' key={qIndex}>
             <h3 id={`question-${qIndex}`}>{he.decode(question.question)}</h3>
-            <div className="answers" role="radiogroup" aria-labelledby={`question-${qIndex}`}>
-                {question.answers.map((answer, aIndex) => {
-                    const answerId = `q${qIndex}-a${aIndex}`
-                    return (
-                        <label
-                            key={answerId}
-                            htmlFor={answerId}
-                            className={`default ${
-                                checked
-                                    ? answer === question.correct_answer
-                                        ? "correct"
-                                        : userAnswers[question.question] === answer
-                                        ? "wrong"
-                                        : ""
-                                    : ""
-                            }`}
-                            aria-disabled={checked}
-                        >
-                            <input
-                                type="radio"
-                                id={answerId}
-                                name={`question-${qIndex}`}
-                                value={answer}
-                                checked={userAnswers[question.question] === answer}
-                                onChange={() => saveUserAnswers(question.question, answer)}
-                                disabled={checked}
-                            />
-                            {he.decode(answer)}
-                        </label>
-                    )
-                })}
+            <div
+                className="answers"
+                role="radiogroup"
+                aria-labelledby={`question-${qIndex}`}
+            >
+                {question.answers.map((answer, aIndex) => (
+                    <label
+                        key={aIndex}
+                        className={`default ${
+                            checked
+                                ? answer === question.correct_answer
+                                    ? "correct"
+                                    : userAnswers[question.question] === answer
+                                    ? "wrong"
+                                    : "disabled"
+                                : ""
+                        }`}
+                    >
+                        <input
+                            type="radio"
+                            name={`question-${qIndex}`}
+                            value={answer}
+                            checked={userAnswers[question.question] === answer}
+                            onChange={() => saveUserAnswers(question.question, answer)}
+                            disabled={checked}
+                        />
+                        {he.decode(answer)}
+                    </label>
+                ))}
             </div>
             <hr/>
         </div>
