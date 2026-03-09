@@ -39,32 +39,38 @@ export default function Questions(props) {
 
     const generateQuestions = questions.map((question, qIndex) => (
         <div className='question' key={qIndex}>
-            <h3>{he.decode(question.question)}</h3>
-            <div className="answers">
-                {question.answers.map((answer, aIndex) => (
-                    <label
-                        key={aIndex}
-                        className={`default ${
-                            checked
-                                ? answer === question.correct_answer
-                                    ? "correct"
-                                    : userAnswers[question.question] === answer
-                                    ? "wrong"
+            <h3 id={`question-${qIndex}`}>{he.decode(question.question)}</h3>
+            <div className="answers" role="radiogroup" aria-labelledby={`question-${qIndex}`}>
+                {question.answers.map((answer, aIndex) => {
+                    const answerId = `q${qIndex}-a${aIndex}`
+                    return (
+                        <label
+                            key={answerId}
+                            htmlFor={answerId}
+                            className={`default ${
+                                checked
+                                    ? answer === question.correct_answer
+                                        ? "correct"
+                                        : userAnswers[question.question] === answer
+                                        ? "wrong"
+                                        : ""
                                     : ""
-                                : ""
-                        }`}
-                    >
-                        <input
-                            type="radio"
-                            name={`question-${qIndex}`}
-                            value={answer}
-                            checked={userAnswers[question.question] === answer}
-                            onChange={() => saveUserAnswers(question.question, answer)}
-                            disabled={checked}
-                        />
-                        {he.decode(answer)}
-                    </label>
-                ))}
+                            }`}
+                            aria-disabled={checked}
+                        >
+                            <input
+                                type="radio"
+                                id={answerId}
+                                name={`question-${qIndex}`}
+                                value={answer}
+                                checked={userAnswers[question.question] === answer}
+                                onChange={() => saveUserAnswers(question.question, answer)}
+                                disabled={checked}
+                            />
+                            {he.decode(answer)}
+                        </label>
+                    )
+                })}
             </div>
             <hr/>
         </div>
@@ -85,11 +91,12 @@ export default function Questions(props) {
                     clickHandler={checkAnswers}
                     className={btnClassName}
                     value={btnCheckAnswersValue}
-                    disabled={allAnswered ? null : 'disabled'}
+                    disabled={!allAnswered}
+                    aria-disabled={!allAnswered}
                 />
             ) : (
                 <div className='score-wrapper'>
-                    <h3 className="score">
+                    <h3 className="score" role="status" aria-live="polite">
                         You scored {score}/{questions.length} correct answers
                     </h3>
                     <Button
