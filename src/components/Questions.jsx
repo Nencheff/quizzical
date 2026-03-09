@@ -13,57 +13,13 @@ export default function Questions(props) {
             ].sort(() => Math.random() - 0.5)
         }))
     )
-    
-    const [userAnswers, setUserAnswers] = React.useState({})
-        const btnClassName = "default lg"
-        const btnPlayValue = "Play again"
-        const btnCheckAnswersValue = "Check answers"
 
+    const [userAnswers, setUserAnswers] = React.useState({})
     const [checked, setChecked] = React.useState(false)
 
-    const score = questions.reduce((total, question) => {
-        if (userAnswers[question.question] === question.correct_answer) {
-            return total + 1
-        }
-        return total
-    }, 0)
-
-    const generateQuestions = questions.map((question, qIndex) => {
-        return (
-            <div className='question' key={qIndex}>
-                <h3>{he.decode(question.question)}</h3>
-            
-                <div className="answers">
-                    {question.answers.map((answer, aIndex) => (
-                        <label 
-                            key={aIndex}
-                            className={`default ${
-                                checked
-                                    ? answer === question.correct_answer
-                                        ? "correct"
-                                        : userAnswers[question.question] === answer
-                                        ? "wrong"
-                                        : "disabled"
-                                    : ""
-                            }`}
-                            onClick={() => !checked && saveUserAnswers(question.question, answer)}
-                        >
-                            <input
-                                type="radio"
-                                name={`question-${qIndex}`}
-                                value={answer}
-                                disabled={checked}
-                            />
-
-                            {he.decode(answer)}
-                        </label>
-                    ))}
-                </div>
-
-                <hr/>
-            </div>
-        )
-    })
+    const btnClassName = "default lg"
+    const btnPlayValue = "Play again"
+    const btnCheckAnswersValue = "Check answers"
 
     function saveUserAnswers(question, answer) {
         setUserAnswers(prev => ({
@@ -72,9 +28,49 @@ export default function Questions(props) {
         }))
     }
 
+    const score = questions.reduce((total, question) => {
+        if (userAnswers[question.question] === question.correct_answer) {
+            return total + 1
+        }
+        return total
+    }, 0)
+
     const allAnswered = Object.keys(userAnswers).length === questions.length
 
-    function test() {
+    const generateQuestions = questions.map((question, qIndex) => (
+        <div className='question' key={qIndex}>
+            <h3>{he.decode(question.question)}</h3>
+            <div className="answers">
+                {question.answers.map((answer, aIndex) => (
+                    <label
+                        key={aIndex}
+                        className={`default ${
+                            checked
+                                ? answer === question.correct_answer
+                                    ? "correct"
+                                    : userAnswers[question.question] === answer
+                                    ? "wrong"
+                                    : ""
+                                : ""
+                        }`}
+                    >
+                        <input
+                            type="radio"
+                            name={`question-${qIndex}`}
+                            value={answer}
+                            checked={userAnswers[question.question] === answer}
+                            onChange={() => saveUserAnswers(question.question, answer)}
+                            disabled={checked}
+                        />
+                        {he.decode(answer)}
+                    </label>
+                ))}
+            </div>
+            <hr/>
+        </div>
+    ))
+
+    function checkAnswers() {
         setChecked(true)
     }
 
@@ -84,29 +80,25 @@ export default function Questions(props) {
                 {generateQuestions}
             </div>
 
-            {!checked ?
-                <Button 
-                    clickHandler={test} 
-                    className={btnClassName} 
+            {!checked ? (
+                <Button
+                    clickHandler={checkAnswers}
+                    className={btnClassName}
                     value={btnCheckAnswersValue}
-                    disabled={allAnswered ? null : 'disabled'} 
+                    disabled={allAnswered ? null : 'disabled'}
                 />
-            :   
-                <>
-                    <div className='score-wrapper'>
-                        {checked && (
-                        <h3 className="score">
-                            You scored {score}/{questions.length} correct answers
-                        </h3>
-                        )}
-                        <Button 
-                            clickHandler={props.onPrev} 
-                            className={btnClassName} 
-                            value={btnPlayValue} 
-                        />
-                    </div>
-                </>
-            }
+            ) : (
+                <div className='score-wrapper'>
+                    <h3 className="score">
+                        You scored {score}/{questions.length} correct answers
+                    </h3>
+                    <Button
+                        clickHandler={props.onPrev}
+                        className={btnClassName}
+                        value={btnPlayValue}
+                    />
+                </div>
+            )}
         </section>
     )
 }
