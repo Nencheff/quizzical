@@ -1,21 +1,34 @@
 import React from 'react'
 import Button from './buttons/Button'
-import { questionsData } from '../data/questions'
 import he from 'he'
 
 export default function Questions(props) {
-    const [questions, setQuestions] = React.useState(() =>
-        questionsData.map(q => ({
-            ...q,
-            answers: [
-                ...q.incorrect_answers,
-                q.correct_answer
-            ].sort(() => Math.random() - 0.5)
-        }))
-    )
+    const [questions, setQuestions] = React.useState([])
+
+    React.useEffect(() => {
+        fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+            .then(res => res.json())
+            .then(data => {
+                if (!data.results) return
+                setQuestions(
+                    data.results.map(q => ({
+                        ...q,
+                        answers: [
+                            ...q.incorrect_answers,
+                            q.correct_answer
+                        ].sort(() => Math.random() - 0.5)
+                    }))
+                )
+            })
+    }, [])
+
 
     const [userAnswers, setUserAnswers] = React.useState({})
     const [checked, setChecked] = React.useState(false)
+
+    if (!questions.length) {
+        return <p>Loading...</p>
+    }
 
     const btnClassName = "default lg"
     const btnPlayValue = "Play again"
