@@ -11,10 +11,10 @@ export default function Questions(props) {
             .then(data => {
                 if (!data.results) return
                 setQuestions(
-                    data.results.map(q => ({
+                    (data.results || []).map(q => ({
                         ...q,
                         answers: [
-                            ...q.incorrect_answers,
+                            ...(q.incorrect_answers || []),
                             q.correct_answer
                         ].sort(() => Math.random() - 0.5)
                     }))
