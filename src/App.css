@@ -181,7 +181,7 @@ hr {
 
 .answers label.disabled,
 .answers label.disabled:hover,
-.asnwers label.default.disabled:hover {
+.answers label.default.disabled:hover {
 	background-color: #fff;
 	opacity: 0.5;
 	cursor: not-allowed;

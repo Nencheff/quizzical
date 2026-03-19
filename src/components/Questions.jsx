@@ -101,10 +101,11 @@ export default function Questions(props) {
                 <Button
                     clickHandler={checkAnswers}
                     className={btnClassName}
-                    value={btnCheckAnswersValue}
                     disabled={!allAnswered}
                     aria-disabled={!allAnswered}
-                />
+                >
+                    {btnCheckAnswersValue}
+                </Button>
             ) : (
                 <div className='score-wrapper'>
                     <h3 className="score" role="status" aria-live="polite">
@@ -113,8 +114,9 @@ export default function Questions(props) {
                     <Button
                         clickHandler={props.onPrev}
                         className={btnClassName}
-                        value={btnPlayValue}
-                    />
+                    >
+                        {btnPlayValue}
+                    </Button>
                 </div>
             )}
         </section>
