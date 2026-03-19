@@ -1,13 +1,14 @@
 
 
-export default function Button(props) {
+export default function Button({children, clickHandler, className, disabled, ...rest}) {
     return (
-        <button 
-            onClick={props.clickHandler} 
-            className={props.className}
-            disabled={props.disabled}
+        <button
+            onClick={clickHandler}
+            className={className}
+            disabled={disabled}
+            {...rest}
         >
-            {props.value}
+            {children}
         </button>
     )
 }

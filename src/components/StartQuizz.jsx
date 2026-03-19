@@ -9,14 +9,15 @@ export default function StartQuizz(props) {
             <div className='start-page'>
                 <h1>Quizzical</h1>
                 <h2>Scrimba app</h2>
-                
-                <Button 
-                    clickHandler={props.onNext} 
-                    className={btnClassName} 
-                    value={btnValue} 
-                />
+
+                <Button
+                    clickHandler={props.onNext}
+                    className={btnClassName}
+                >
+                    {btnValue}
+                </Button>
             </div>
-           
+
         </>
     )
 }

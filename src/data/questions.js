@@ -1,3 +1,4 @@
+// Dummy data
 export const questionsData = [
     {
         "type": "multiple",
